@@ -1,0 +1,75 @@
+* Cool SLIME features
+** The Basics:
+- Editing files:
+  - slime-reindent-defun
+- Evalutating expressions (C-c C-c)
+- Indentation (TAB), indentation of macros
+- Compiling & loading whole files (C-c C-k)
+- Finding definitions: M-.
+** The REPL & shortcuts:
+- , change-directory
+- , defparameter (aka ,!)
+- , in-package
+** Debugger:  [[file:examples.lisp::Debugger][examples]]
+    - Backtraces
+    - Stack manipulation / evaluating stuff in frames
+    - jump to frame source: "v" (not working in sbcl currently?)
+    - Error Recovery
+** Stepper: [[file:examples.lisp::Stepper][examples]]
+    - key bindings: 
+      - s :: step into
+      - x :: next
+      - c :: continue
+** Inspector [[file:examples.lisp::Inspector][examples]]
+    - Function arguments (RET on stack frames in the debugger)
+    - Conditions (C in the debugger)
+    - lists (Go back in history: "l")
+    - Packages
+    - Generic functions
+    - Classes
+* Cool paredit features
+** Navigation:
+    - forward/backward, up/down
+    - M-a / M-e (start / end of defun)
+** Editing lisp:
+    - Auto-insertion of closing paren: Just type like you would otherwise
+    - Snarf / Barf: M-left / M-right
+    - killing expressions (C-M-k)
+    - pulling out expressions: M-up
+* SLIME contribs
+** slime-selector: lets you jump around slime easily
+** slime-asdf: easy loading of third-party code
+** slime-autodoc: Very nice arglist display
+    - defun [[file:examples.lisp::Now%20hit%20space%20after%20some%20arglist][demo]]
+    - defclass [[file:examples.lisp::Hit%20space%20after%20some%20class%20with%20hints][demo]]
+    - defmethod
+** slime-sbcl-exts: Nice condition display, implementation source lookup
+* Emacs features
+** show-paren-mode: Nice parenthesis display [builtin]
+    (show-paren-mode 1)
+    (setq show-paren-delay 0)
+** full-ack: Fast grepping through a project [[[http://nschum.de/src/emacs/full-ack/][full-ack homepage]]]
+    (autoload 'ack-same "full-ack" nil t)
+    (autoload 'ack "full-ack" nil t)
+    (autoload 'ack-find-same-file "full-ack" nil t)
+    (autoload 'ack-find-file "full-ack" nil t)
+
+    (defun ack-project (prefix)
+    "Ack for current word at point from the project root (uses full-ack).
+    With prefix argument, search only files of the same type."
+      (interactive "p")
+      (require 'full-ack)
+      (if prefix
+         (ack-run (ack-guess-project-root) nil (current-word))
+         (ack-run (ack-guess-project-root) nil (append (ack-type) (list (current-word))))))
+** git-wip: Save every intermediate state of a tree (life saver!) [[[http://github.com/bartman/git-wip][git-wip on github]]]
+    (load "git-wip")
+    
+    Every time you save a file, it commits to an invisible "wip"
+    branch. No more hitting undo to get to a known-working state, just
+    checkout the tree from when it was last working.
+** org-mode: Get organized. [[[http://orgmode.org/manual/index.html][org-mode homepage]]]
+    This presentation is an org outline.
+
+    It's awesome, check it out (but it's too big and unrelated to show
+    here (-:)
